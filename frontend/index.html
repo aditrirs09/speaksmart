@@ -2,204 +2,138 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SpeakSmart | AI Interview Coach</title>
-  <link href="https://fonts.cdnfonts.com/css/visitor" rel="stylesheet" />
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SpeakSmart Login</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-fadeIn { animation: fadeIn 0.5s ease-out; }
+  </style>
 </head>
-<body>
-     <div class="background-blobs">
-  <div class="blob blob-purple"></div>
-  <div class="blob blob-blue"></div>
-  <div class="blob blob-indigo"></div>
-</div>
+<body class="min-h-screen bg-gradient-to-br from-purple-100 via-blue-50 to-indigo-100 flex items-center justify-center p-4 relative">
 
-  <!-- Sidebar -->
-  <button class="sidebar-toggle" onclick="toggleSidebar()">    <i class="ph ph-sparkle text-white text-2xl"></i>
-</button>
-  <aside class="sidebar">
-    <div class="logo">SpeakSmart</div>
-    <nav>
-      <button class="nav-btn active" onclick="showSection('dashboard')"><i class="ph ph-house"></i> Dashboard</button>
-      <button class="nav-btn" onclick="showSection('practice')"><i class="ph ph-head-circuit"></i> Practice</button>
-      <button class="nav-btn" onclick="showSection('progress')"><i class="ph ph-trend-up"></i> Progress</button>
-    </nav>
-    <button class="nav-logout" onclick="logout()">Logout <i class="ph ph-sign-out"></i> </button>
-  </aside>
+  <!-- 🔮 Background Effects -->
+  <div class="absolute inset-0 overflow-hidden z-0">
+    <div class="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+    <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+  </div>
 
-  <main class="main">
-    <div class="main-content">
-
-      <!-- Dashboard -->
-      <section id="dashboard-section">
-        <header class="header">
-          <h1 class="pixel-title"><i class="ph ph-microphone-stage"></i> Interview Practice</h1>
-          <h2 class="welcome-message">Ready to grow, <span id="username"></span> <i class="ph ph-hands-clapping"></i></h2>
-          <div id="stats-summary" class="card" style="margin-top: 2rem;">
-            <div class="card-header"> <i class="ph ph-chart-bar"></i> Quick Stats</div>
-            <div class="stats-grid">
-              <div class="stat-box">
-                 <p>Total Feedbacks</p>
-                <h3 id="total-entries">0</h3>
-               </div>
-              <div class="stat-box">
-                <p>Last Practice</p>
-                <h3 id="last-date">--</h3>
-              </div>
-              <div class="stat-box">
-                <p>Avg per Day</p>
-                <h3 id="avg-daily">--</h3>
-              </div>
-              <div class="stat-box">
-                <p>Current Streak</p>
-                <h3>🔥 <span id="current-streak">--</span></h3>
-              </div>
-              <div class="stat-box">
-                <p>Longest Streak</p>
-                <h3>🏆 <span id="longest-streak">--</span></h3>
-                </div>
-              
-            </div>
-            
-          </div>
-          <section class="card">
-                <div id="badge">
-                  <div class="card-header"> <i class="ph ph-medal"></i> Achievements</div>
-                <div id="badge-list" class="badge-list"></div>
-                </div> 
-              </section>
-        </header>
-      </section>
-
-      <!-- Practice -->
-      <section id="practice-section" style="display: none;">
-        <section class="card">
-          <div class="card-header"><i class="ph ph-question"></i> Generate a Question</div>
-          <div class="controls">
-            <select id="category">
-              <option value="tech">Technical</option>
-              <option value="behavior">Behavioral</option>
-              <option value="hr">HR</option>
-            </select>
-            <button onclick="generateWithCohere()"> Generate</button>
-            <input type="text" id="customPrompt" placeholder="Custom prompt..." />
-            <button id="askAiBtn"><i class="ph ph-sparkle"></i> Ask AI</button>
-          </div>
-          <div class="question-display"></div>
-        </section>
-
-        <section class="card">
-          <div class="card-header"><i class="ph ph-note-pencil"></i> Your Response</div>
-          <textarea id="answerInput" placeholder="Type your answer here..."></textarea>
-          <div class="actions">
-            <button id="recordBtn"><i class="ph ph-microphone"></i> Record</button>
-            <button id="submitBtn"><i class="ph ph-paper-plane-right"></i> Submit</button>
-          </div>
-        </section>
-
-        <section class="card">
-          <div class="card-header"><i class="ph ph-open-ai-logo"></i> AI Feedback</div>
-          <p class="Ai-feedback-h"><strong><i class="ph ph-note-pencil"></i> Original:</strong></p>
-          <pre id="originalBox" class="feedback-box"></pre>
-          <p class="Ai-feedback-h"><strong><i class="ph ph-lightbulb"></i> Suggestions:</strong></p>
-          <pre id="suggestionBox" class="feedback-box"></pre>
-          <p class="Ai-feedback-h"><strong><i class="ph ph-swap"></i> Improved:</strong></p>
-          <pre id="improvedBox" class="feedback-box"></pre>
-        </section>
-      </section>
-
-      <!-- Progress -->
-      <section id="progress-section" style="display: none;">
-        <section class="card">
-          <div class="card-header"><i class="ph ph-trend-up"></i>  Your Progress</div>
-          <div id="progress-container">
-            <p id="progress-status">Loading your past feedback...</p>
-            <canvas id="feedbackChart" width="400" height="200"></canvas>
-            <div id="progress-history"></div>
-          </div>
-        </section>
-      </section>
+  <!-- 🔐 Card -->
+  <div class="w-full max-w-md bg-white/70 backdrop-blur-xl border border-white/50 rounded-xl shadow-2xl relative z-10 animate-float p-6">
+    <div class="text-center pb-4">
+      <div class="mx-auto w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg mb-4 transition-transform duration-300 hover:scale-110">
+        <i class="ph ph-sparkle text-white text-2xl"></i>
+      </div>
+      <h1 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">🎤 SpeakSmart</h1>
+      <p class="text-gray-600 font-medium mt-1">Your AI Interview Companion</p>
     </div>
-  </main>
 
-  <!-- Global UI Scripts -->
-  <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      if (window.innerWidth < 768) {
-        document.body.classList.add("sidebar-collapsed");
-      }
-    });
+    <!-- Mode Buttons -->
+    <div id="mode-choice" class="space-y-4 animate-fadeIn">
+      <button onclick="showForm('login')" class="w-full h-14 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-2">
+        <i class="ph ph-user text-lg"></i>  Already Registered <i class="ph ph-arrow-right text-lg"></i>
+      </button>
+      <button onclick="showForm('register')" class="w-full h-14 bg-white/80 backdrop-blur-sm border-2 border-purple-200 hover:bg-purple-50 text-purple-700 font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-2">
+        <i class="ph ph-user-plus text-lg"></i> New User <i class="ph ph-arrow-right text-lg"></i>
+      </button>
+    </div>
 
-    function toggleSidebar() {
-      const body = document.body;
-      body.classList.toggle("sidebar-collapsed");
-      const btn = document.querySelector(".sidebar-toggle");
-      // btn.textContent = body.classList.contains("sidebar-collapsed") ? "" : "✖";
-    }
+    <!-- Login Form -->
+    <form id="login-form" class="space-y-4 hidden animate-fadeIn mt-4">
+      <div>
+        <label class="text-sm font-medium text-gray-700">Email</label>
+        <input type="email" id="login-email" class="w-full h-12 mt-1 px-4 bg-white/80 backdrop-blur-sm border border-gray-200 focus:ring-purple-500 focus:border-purple-500 rounded-xl" placeholder="Enter your email">
+      </div>
+      <div>
+        <label class="text-sm font-medium text-gray-700">Password</label>
+        <input type="password" id="login-password" class="w-full h-12 mt-1 px-4 bg-white/80 backdrop-blur-sm border border-gray-200 focus:ring-purple-500 focus:border-purple-500 rounded-xl" placeholder="Enter your password">
+      </div>
+      <button type="submit" class="w-full h-12 bg-gradient-to-r from-green-500 to-emrald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">🔓 Sign In</button>
+      <button type="button" onclick="showForm('choice')" class="w-full text-gray-600 hover:text-gray-800 mt-2">← Back to options</button>
+    </form>
 
-    function showSection(sectionName) {
-      const sections = ['dashboard', 'practice', 'progress'];
-      sections.forEach(name => {
-        document.getElementById(`${name}-section`).style.display = (name === sectionName) ? 'block' : 'none';
-      });
-      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-      const buttons = document.querySelectorAll('.nav-btn');
-      const sectionMap = { dashboard: 0, practice: 1, progress: 2 };
-      buttons[sectionMap[sectionName]].classList.add('active');
-    }
-  </script>
+    <!-- Register Form -->
+    <form id="register-form" class="space-y-4 hidden animate-fadeIn mt-4">
+      <div>
+        <label class="text-sm font-medium text-gray-700">Email</label>
+        <input type="email" id="register-email" class="w-full h-12 mt-1 px-4 bg-white/80 backdrop-blur-sm border border-gray-200 focus:ring-purple-500 focus:border-purple-500 rounded-xl" placeholder="Enter your email">
+      </div>
+      <div>
+        <label class="text-sm font-medium text-gray-700">Password</label>
+        <input type="password" id="register-password" class="w-full h-12 mt-1 px-4 bg-white/80 backdrop-blur-sm border border-gray-200 focus:ring-purple-500 focus:border-purple-500 rounded-xl" placeholder="Enter your password">
+      </div>
+      <button type="submit" class="w-full h-12 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">Register</button>
+      <button type="button" onclick="showForm('choice')" class="w-full text-gray-600 hover:text-gray-800 mt-2">← Back to options</button>
+    </form>
+  </div>
 
-  <!-- Microphone Logic -->
-  <script>
-    const recordBtn = document.getElementById("recordBtn");
-    const answerInput = document.getElementById("answerInput");
-    let recognition;
-    let isRecording = false;
+  <!-- ✅ Supabase Auth Script -->
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognition = new SpeechRecognition();
-      recognition.lang = 'en-US';
-      recognition.interimResults = false;
-      recognition.continuous = false;
+    const supabase = createClient(
+      'https://zfutomavbjmxonyfjlhm.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdXRvbWF2YmpteG9ueWZqbGhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA2NjE0MjcsImV4cCI6MjA2NjIzNzQyN30.bnAVd6t_Jgmr-2u3j1hLZCiunTn6S1PNgizp_e3Yppo'
+    );
 
-      recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        answerInput.value = transcript;
-      };
+    // Show correct form
+    window.showForm = function(mode) {
+      document.getElementById('mode-choice').style.display = mode === 'choice' ? 'block' : 'none';
+      document.getElementById('login-form').style.display = mode === 'login' ? 'block' : 'none';
+      document.getElementById('register-form').style.display = mode === 'register' ? 'block' : 'none';
+    };
 
-      recognition.onerror = (event) => {
-        alert("🎙️ Error: " + event.error);
-      };
+    // Login handler
+    document.querySelector('#login-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("login-email").value.trim();
+      const password = document.getElementById("login-password").value.trim();
 
-      recognition.onend = () => {
-        if (isRecording) recognition.start();
-      };
-    } else {
-      alert("Your browser does not support speech recognition.");
-    }
+      if (!email || !password) return alert("Fill both fields");
 
-    recordBtn?.addEventListener("click", () => {
-      if (!recognition) return;
-      if (!isRecording) {
-        recognition.start();
-        recordBtn.textContent = "🛑 Stop";
-        isRecording = true;
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        alert("Login failed: " + error.message);
       } else {
-        recognition.stop();
-        recordBtn.textContent = "🎙️ Record";
-        isRecording = false;
+        localStorage.setItem("email", data.user.email);
+        window.location.href = "index.html"; // ✅ redirect to dashboard
+      }
+    });
+
+    // Register handler
+    document.querySelector('#register-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("register-email").value.trim();
+      const password = document.getElementById("register-password").value.trim();
+
+      if (!email || !password) return alert("Fill both fields");
+
+      const { data, error } = await supabase.auth.signUp({ email, password });
+
+      if (error) {
+        alert("Registration failed: " + error.message);
+      } else {
+        alert("Check your inbox to confirm email!");
+        showForm("login");
       }
     });
   </script>
-
-  <!-- Main Supabase + Feedback + Progress Logic -->
-  <script type="module" src="./app.js"></script>
 
 </body>
 </html>
+
