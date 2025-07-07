@@ -313,6 +313,6 @@ Respond strictly in this format:
 // ✅ Logout
 window.logout = async function () {
   const { error } = await supabase.auth.signOut();
-  if (!error) window.location.href = "login.html";
+  if (!error) window.location.href = "index.html";
   else alert("Logout failed: " + error.message);
 };
