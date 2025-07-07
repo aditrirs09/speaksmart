@@ -1,0 +1,157 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family:'Jersey 10';
+  height: 100vh;
+  background: linear-gradient(135deg, #fce4ec, #e0f7fa, #f3e5f5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  animation: fadeIn 1s ease-in-out;
+}
+.page-body {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+/* 💫 Floating animation for the login card */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.login-card {
+  animation: float 4s ease-in-out infinite;
+  background: rgba(232, 149, 239, 0.25);
+  backdrop-filter: blur(18px);
+  border-radius: 28px;
+  box-shadow:
+    inset 8px 8px 16px rgba(255, 255, 255, 0.6),
+    8px 8px 24px rgba(0, 0, 0, 0.15);
+  padding: 3.8rem 3.8rem;
+  width: 320px;
+  max-width: 90%;
+  text-align: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Title and subtitle */
+.pixel-title {
+  font-family:'Jersey 10';
+  font-size: 2.3rem;
+  color: #a061d1;
+  margin-bottom: 0.4rem;
+  /* text-align: center; */
+}
+
+.subtitle {
+  color: #444;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Input Fields */
+input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow:
+    inset 2px 2px 5px rgba(255, 255, 255, 0.6),
+    inset -2px -2px 5px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #c39bd3;
+  box-shadow:
+    0 0 0 3px rgba(195, 155, 211, 0.3);
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  background: #c1b2ea;
+  color: white;
+  font-family:'Jersey 10';
+  font-size: 1rem;
+  padding: 0.75rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow:
+    4px 4px 8px rgba(0, 0, 0, 0.15),
+    -2px -2px 5px rgba(255, 255, 255, 0.3);
+}
+
+button:hover {
+  background: #aa9bdc;
+  transform: translateY(-2px);
+  box-shadow:
+    4px 6px 14px rgba(0, 0, 0, 0.2),
+    -2px -2px 6px rgba(255, 255, 255, 0.5);
+}
+
+/* Footer note */
+.small {
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  color: #666;
+}
+#login-form,
+#register-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#login-form input,
+#register-form input {
+  margin-bottom: 1rem;
+  width: 85%; /* 👈 Shrinks width slightly */
+}
+.fade-in {
+  animation: fadeInForm 0.5s ease-in-out forwards;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@keyframes fadeInForm {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-out {
+  animation: fadeOutPage 0.4s ease forwards;
+}
+
+@keyframes fadeOutPage {
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
